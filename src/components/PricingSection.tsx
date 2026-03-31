@@ -6,7 +6,7 @@ export default function PricingSection() {
   const [plans, setPlans] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/packages")
+    fetch("https://crfitness-yezw.vercel.app/api/packages")
       .then(res => res.json())
       .then(data => {
         const updated = data.map((item, index) => ({
@@ -91,7 +91,7 @@ export default function PricingSection() {
             <button
               onClick={() => {
                 window.open(
-                  `https://wa.me/91XXXXXXXXXX?text=Hi, I'm interested in ${plan.name} plan`,
+                  `https://wa.me/917836909669?text=Hi, I'm interested in ${plan.name} plan`,
                   "_blank"
                 );
               }}

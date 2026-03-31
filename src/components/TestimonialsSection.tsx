@@ -6,7 +6,7 @@ export default function TestimonialSection() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/reviews")
+    fetch("https://crfitness-yezw.vercel.app/api/reviews")
       .then(res => res.json())
       .then(data => setReviews(data));
   }, []);

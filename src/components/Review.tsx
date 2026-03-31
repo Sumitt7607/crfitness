@@ -10,7 +10,7 @@ export default function Review() {
   const submit = async () => {
     if (!name || !message) return alert("Fill all fields");
 
-    await fetch("http://localhost:5000/api/reviews", {
+    await fetch("https://crfitness-yezw.vercel.app/api/reviews", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
