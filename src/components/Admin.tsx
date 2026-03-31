@@ -21,7 +21,7 @@ export default function Admin() {
   const token = localStorage.getItem("token");
 
   const fetchData = async () => {
-    const res = await fetch("http://localhost:5000/api/packages");
+    const res = await fetch("https://crfitness-yezw.vercel.app/api/packages");
     const data = await res.json();
     setList(data);
   };
@@ -38,8 +38,8 @@ export default function Admin() {
     }
 
     const url = editId
-      ? `http://localhost:5000/api/packages/${editId}`
-      : "http://localhost:5000/api/packages";
+      ? `https://crfitness-yezw.vercel.app/api/packages/${editId}`
+      : "https://crfitness-yezw.vercel.app/api/packages";
 
     const method = editId ? "PUT" : "POST";
 
@@ -69,7 +69,7 @@ export default function Admin() {
   const del = async (id) => {
     if (!confirm("Delete this package?")) return;
 
-    await fetch(`http://localhost:5000/api/packages/${id}`, {
+    await fetch(`https://crfitness-yezw.vercel.app/api/packages/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
