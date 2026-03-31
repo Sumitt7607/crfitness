@@ -1,114 +1,113 @@
 import { motion } from "framer-motion";
-import SectionWrapper from "./SectionWrapper";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { Check, Star, Sparkles } from "lucide-react";
 
-const plans = [
-  {
-    name: "Basic",
-    price: 0,
-    period: "/month",
-    features: ["Gym Access (5 AM – 10 PM)", "Locker Room", "Free WiFi", "Basic Equipment"],
-    popular: false,
-  },
-  {
-    name: "Premium",
-    price: 0,
-    period: "/month",
-    features: ["Everything in Basic", "Yoga, Zumba & Aerobics Classes", "Personal Training (2x/mo)", "Sauna & Steam", "Nutrition Plan"],
-    popular: true,
-  },
-  {
-    name: "Elite",
-    price: 0,
-    period: "/month",
-    features: ["Everything in Premium", "Unlimited PT Sessions", "Body Composition Analysis", "Recovery Zone", "Priority Booking", "Guest Passes"],
-    popular: false,
-  },
-];
+export default function PricingSection() {
+  const [plans, setPlans] = useState([]);
 
-const PricingSection = () => {
+  useEffect(() => {
+    fetch("http://localhost:5000/api/packages")
+      .then(res => res.json())
+      .then(data => {
+        const updated = data.map((item, index) => ({
+          ...item,
+          popular: index === 1,
+        }));
+        setPlans(updated);
+      });
+  }, []);
+
   return (
-    <SectionWrapper id="pricing" className="bg-gradient-dark relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/3 blur-3xl animate-breathe" />
+    <section className="bg-black text-white py-24 px-6">
 
-      <div className="container mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <p className="text-sm uppercase tracking-[0.3em] text-primary mb-3">Membership Plans</p>
-          <h2 className="text-4xl md:text-6xl font-heading">
-            CHOOSE YOUR <span className="text-gradient-primary">PLAN</span>
-          </h2>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {plans.map((plan, i) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              whileHover={{ y: -12, transition: { duration: 0.3 } }}
-              className={`rounded-xl p-8 relative ${
+      {/* ===== HEADING ===== */}
+      <div className="text-center mb-20">
+        <p className="text-red-500 tracking-[0.4em] text-sm mb-3">
+          MEMBERSHIP PLANS
+        </p>
+
+        <h2 className="text-6xl md:text-7xl font-extrabold tracking-wide">
+          CHOOSE YOUR{" "}
+          <span className="text-red-500">PLAN</span>
+        </h2>
+      </div>
+
+      {/* ===== CARDS ===== */}
+      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+        {plans.map((plan, i) => (
+          <motion.div
+            key={plan._id}
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.2 }}
+            whileHover={{ y: -10 }}
+            className={`relative rounded-2xl p-8 transition-all duration-300 ${
+              plan.popular
+                ? "bg-red-600 text-white scale-105 shadow-[0_0_40px_rgba(255,0,0,0.6)]"
+                : "bg-[#111] border border-gray-800"
+            }`}
+          >
+
+            {/* 🔥 MOST POPULAR */}
+            {plan.popular && (
+              <>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-red-500 text-xs px-4 py-1 rounded-full flex items-center gap-1">
+                  <Star className="w-3 h-3" /> MOST POPULAR
+                </div>
+
+                <div className="absolute top-5 right-5 animate-pulse">
+                  <Sparkles className="w-5 h-5 text-white/70" />
+                </div>
+              </>
+            )}
+
+            {/* PLAN NAME */}
+            <h3 className="text-2xl font-bold mb-3">
+              {plan.name}
+            </h3>
+
+            {/* PRICE */}
+            <div className="mb-6">
+              <span className="text-5xl font-bold">
+                ₹{plan.price}
+              </span>
+              <span className="text-sm ml-2 opacity-80">
+                {plan.duration}
+              </span>
+            </div>
+
+            {/* FEATURES */}
+            <ul className="space-y-3 mb-8 text-sm">
+              {plan.features?.map((f, idx) => (
+                <li key={idx} className="flex items-center gap-2">
+                  <Check className="w-4" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+
+            {/* BUTTON */}
+            <button
+              onClick={() => {
+                window.open(
+                  `https://wa.me/91XXXXXXXXXX?text=Hi, I'm interested in ${plan.name} plan`,
+                  "_blank"
+                );
+              }}
+              className={`w-full py-3 rounded-lg font-bold transition ${
                 plan.popular
-                  ? "bg-gradient-primary border-0 text-primary-foreground"
-                  : "glass"
+                  ? "border border-white bg-transparent hover:bg-black"
+                  : "bg-red-500 hover:bg-red-600 shadow-[0_0_20px_rgba(255,0,0,0.5)]"
               }`}
             >
-              {plan.popular && (
-                <>
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-background text-primary text-xs font-bold uppercase tracking-wider px-4 py-1 rounded-full flex items-center gap-1">
-                    <Star className="w-3 h-3" /> Most Popular
-                  </div>
-                  <motion.div
-                    className="absolute top-6 right-6"
-                    animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  >
-                    <Sparkles className="w-5 h-5 text-primary-foreground/60" />
-                  </motion.div>
-                </>
-              )}
-              <h3 className="text-2xl font-heading mb-2">{plan.name}</h3>
-              <div className="mb-6">
-                <motion.span
-                  className="text-5xl font-heading"
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.2 + 0.3, type: "spring", stiffness: 200 }}
-                >
-                  ₹{plan.price}
-                </motion.span>
-                <span className={`text-sm ${plan.popular ? "text-primary-foreground/80" : "text-muted-foreground"}`}>{plan.period}</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((f, j) => (
-                  <motion.li
-                    key={f}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 + j * 0.05 + 0.3 }}
-                    className="flex items-center gap-3 text-sm"
-                  >
-                    <Check className="w-4 h-4 shrink-0" />
-                    {f}
-                  </motion.li>
-                ))}
-              </ul>
-              <Button
-                variant={plan.popular ? "heroOutline" : "hero"}
-                className="w-full"
-                size="lg"
-              >
-                Get Started
-              </Button>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </SectionWrapper>
-  );
-};
+              GET STARTED
+            </button>
 
-export default PricingSection;
+          </motion.div>
+        ))}
+
+      </div>
+    </section>
+  );
+}

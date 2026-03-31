@@ -35,12 +35,22 @@ const CTASection = () => {
           Limited slots available. Join CR Fitness and transform your body, mind, and lifestyle. Visit us today.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button size="lg" className="text-lg px-10 py-6 bg-background text-foreground hover:bg-background/90 font-semibold uppercase tracking-wider">
-            Join Now
-          </Button>
-          <Button variant="heroOutline" size="lg" className="text-lg px-10 py-6 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+         <Button
+  size="lg"
+  className="text-lg px-10 py-6 bg-background text-foreground hover:bg-background/90 font-semibold uppercase tracking-wider"
+  asChild
+>
+  <a
+    href="https://wa.me/917836909669?text=Hello!%20I%20want%20to%20join%20your%20program"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Join Now
+  </a>
+</Button>
+          {/* <Button variant="heroOutline" size="lg" className="text-lg px-10 py-6 border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
             Start Today
-          </Button>
+          </Button> */}
         </div>
       </motion.div>
     </section>

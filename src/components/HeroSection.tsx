@@ -92,9 +92,20 @@ const HeroSection = () => {
           transition={{ delay: 1.2 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Button variant="hero" size="lg" className="text-lg px-10 py-6 animate-pulse-glow" asChild>
-            <a href="#pricing">Join Now</a>
-          </Button>
+         <Button
+  variant="hero"
+  size="lg"
+  className="text-lg px-10 py-6 animate-pulse-glow"
+  asChild
+>
+  <a
+    href="https://wa.me/917836909669?text=Hello!%20I%20am%20interested%20in%20your%20services.%20Can%20you%20share%20more%20details?"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Join Now
+  </a>
+</Button>
           <Button variant="heroOutline" size="lg" className="text-lg px-10 py-6 animate-border-pulse" asChild>
             <a href="#contact">Visit Us Today</a>
           </Button>
